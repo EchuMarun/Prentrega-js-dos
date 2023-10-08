@@ -34,46 +34,35 @@ document.addEventListener('DOMContentLoaded', function() {
     const idaInput = document.getElementById('ida');
     const vueltaInput = document.getElementById('vuelta');
     const destinoSelect = document.getElementById('destino');
+    const cantidadPersonasSelect = document.getElementById('cantidad_personas');
     const buscarButton = document.getElementById('buscar');
 
     buscarButton.addEventListener('click', function(event) {
         event.preventDefault();
 
-        // Obtener el destino seleccionado y las fechas de ida y vuelta
-        const destino = destinoSelect.value; // Obtener el nombre de la provincia
-        const idaFecha = new Date(idaInput.value);
-        const vueltaFecha = new Date(vueltaInput.value);
+        // Validar si los campos están completos
+        if (!destinoSelect.value || !idaInput.value || !vueltaInput.value || !cantidadPersonasSelect.value) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Completa tu viaje para continuar',
+            });
+            return;
+        }
 
-        // Obtener el costo base según el destino seleccionado desde provinciasArgentinas
-        const provinciaSeleccionada = provinciasArgentinas.find(provincia => provincia.provincia === destino);
-        const costoBase = provinciaSeleccionada ? provinciaSeleccionada.costo : 0;
+        // Obtener los datos del formulario
+        const destino = destinoSelect.value;
+        const idaFecha = idaInput.value;
+        const vueltaFecha = vueltaInput.value;
+        const cantidadPersonas = cantidadPersonasSelect.value;
 
-        // Calcular el número de días de viaje
-        const diasDeViaje = Math.abs((vueltaFecha - idaFecha) / (24 * 60 * 60 * 1000));
-        const costoTotal = costoBase * (1 + 0.05 * diasDeViaje);
+        // Guardar los datos en localStorage
+        localStorage.setItem('destino', destino);
+        localStorage.setItem('idaFecha', idaFecha);
+        localStorage.setItem('vueltaFecha', vueltaFecha);
+        localStorage.setItem('cantidadPersonas', cantidadPersonas);
 
-        // Mostrar el resultado en un modal de SweetAlert
-        Swal.fire({
-            title: `El costo total del viaje a ${destino} por ${diasDeViaje} días es: $${costoTotal.toFixed(2)}`,
-            showDenyButton: true,
-            showCancelButton: false,
-            confirmButtonText: 'Contratar',
-            denyButtonText: 'Cancelar viaje',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire('Contratado', '', 'success');
-            } else if (result.isDenied) {
-                Swal.fire('Viaje cancelado', '', 'info');
-            }
-        });
+        // Redirigir a la página de hoteles
+        window.location.href = 'pages/hoteles.html';
     });
 });
-
-
-
-
-
-
-
-
-
