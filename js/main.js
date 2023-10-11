@@ -63,6 +63,6 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('cantidadPersonas', cantidadPersonas);
 
         // Redirigir a la página de hoteles
-        window.location.href = 'pages/hoteles.html';
+        window.location.href = '/pages/hoteles.html';
     });
 });
