@@ -8,7 +8,9 @@
 
 
 /*--------------------------------------------------------------------- header area ---------------------------------------------------------------------*/
-
+.banner-main img {
+     width: 100%;
+}
 .header {
      background: url(../images/header-bg.jpg);
      background-color: rgba(0, 0, 0, 0);

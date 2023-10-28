@@ -18,14 +18,23 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function() {
     const destinoSelect = document.getElementById('destino');
 
-    // Agregar opciones al select con costos
-    provinciasArgentinas.forEach(function(provincia) {
-        const option = document.createElement('option');
-        option.textContent = `${provincia.provincia}`;
-        option.value = provincia.provincia; // Establece el valor como el nombre de la provincia
-        destinoSelect.appendChild(option);
-    });
+    // Fetch para obtener datos desde el archivo JSON
+    fetch('ciudades.json')
+        .then(response => response.json())
+        .then(data => {
+            // Agregar opciones al select con costos
+            data.forEach(function(provincia) {
+                const option = document.createElement('option');
+                option.textContent = `${provincia.provincia}`;
+                option.value = provincia.provincia; // Establece el valor como el nombre de la provincia
+                destinoSelect.appendChild(option);
+            });
+        })
+        .catch(error => {
+            console.error('Error al obtener datos desde el archivo JSON:', error);
+        });
 });
+
 
 
 
